@@ -13,26 +13,9 @@ public:
     }
 };
 
-// Inserting inputs in linked list
-
-void insert_at_tail(Node *&head, Node *&tail, int value)
-{
-    Node *newnode = new Node(value);
-
-    if (head == NULL)
-    {
-        head = newnode;
-        tail = newnode;
-        return;
-    }
-
-    tail->next = newnode;
-    tail = newnode;
-}
-
 // deleting the tail
 
-void delete_at_tail(Node *head, int tail_index)
+void delete_at_tail(Node *head, Node *&tail, int tail_index) // Passing tail by reference because it will be completely deleted
 {
     Node *tmp = head;
 
@@ -42,8 +25,9 @@ void delete_at_tail(Node *head, int tail_index)
     }
 
     Node *deletenode = tmp->next;
-    tmp->next = NULL;
+    tmp->next = tmp->next->next; // temp->next pointing to NULL(which is at tail->next)
     delete deletenode;
+    tail = tmp;
 }
 
 // printing the linked list
@@ -51,10 +35,11 @@ void delete_at_tail(Node *head, int tail_index)
 void print(Node *head)
 {
     Node *temp = head;
+    cout << "Printing Linked list : ";
 
     while (temp != NULL)
     {
-        cout << temp->val << endl;
+        cout << temp->val << " ";
         temp = temp->next;
     }
 }
@@ -62,21 +47,20 @@ void print(Node *head)
 
 int main()
 {
-    Node *head = NULL;
-    Node *tail = NULL;
-    int val;
+    Node *head = new Node(10);
+    Node *a = new Node(20);
+    Node *b = new Node(30);
+    Node *tail = new Node(40);
 
-    while (1)
-    {
-        cin >> val;
+    head->next = a;
+    a->next = b;
+    b->next = tail;
 
-        if (val == -1)
-        {
-            break;
-        }
-        insert_at_tail(head, tail, val);
-    }
-    delete_at_tail(head, 3);
+    cout << "Tail before deleting : " << tail->val << endl;
+    delete_at_tail(head, tail, 3); // In zero-based indexing, the tail is at  3
+    cout << "Tail after deleting : " << tail->val << endl;
+
     print(head);
+    
     return 0;
 }
