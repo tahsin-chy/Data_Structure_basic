@@ -27,12 +27,12 @@ void insert_at_tail(Node *&head, Node *&tail, int x)
 void delete_any_pos(Node *&head, int idx)
 {
     Node *tmp = head;
-    for (int i = 1; i < idx; i++)
+    for (int i = 0; i < idx-1; i++)
     {
         tmp = tmp->next;
     }
 
-    Node* delete_node = tmp;
+    Node* delete_node = tmp->next;
     tmp->next = tmp->next->next;
     delete delete_node;
 }
@@ -61,7 +61,7 @@ int main()
         }
         insert_at_tail(head, tail, x);
     }
-    delete_any_pos(head, 3);
+    delete_any_pos(head, 2);
     print(head);
     return 0;
 }
