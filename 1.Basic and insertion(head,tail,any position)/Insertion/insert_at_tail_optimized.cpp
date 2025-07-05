@@ -20,6 +20,7 @@ void insert_at_tail_optimized(Node *&head, Node *&tail, int val)
     if (head == NULL)
     {
         head = newnode;
+        tail = newnode;
         return;
     }
     tail->next = newnode;
